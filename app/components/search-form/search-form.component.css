@@ -1,0 +1,44 @@
+
+h1 {
+    font-size: 2em;
+    margin-top: 10px;
+    text-align: center;
+    line-height: 2em;
+}
+
+.faves {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1em;
+    padding: 0.5em 2em;
+}
+
+p {
+    padding: 10px;
+    font-size: 1.2em;
+}
+
+form {
+    padding: 10px;
+}
+
+input[type="text"] {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    font-size: 1em;
+    padding: 5px;
+}
+
+.button-wrap {
+    width: 80%;
+    display: block;
+    margin: 10px auto;
+}
+
+.button-wrap button {
+    min-width: 120px;
+    font-size: 1em;
+    padding: 5px;
+}

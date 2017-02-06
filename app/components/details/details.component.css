@@ -1,0 +1,48 @@
+.wrapper {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.main-details {
+    display: block;
+    width: 30%;
+    float: left;
+}
+
+button {
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.summary {
+    width: 70%;
+    display: block;
+    float: right;
+}
+
+img {
+    position: relative;
+    width: 100%;
+}
+
+h1 {
+    line-height: 2em;
+    font-size: 2em;
+    text-align: center;
+}
+
+h2, h3 {
+    margin-left: 10%;
+    line-height: 2em;
+}
+
+h4 {
+    line-height: 1.5em;
+}
+
+p {
+    font-size: 1.3em;
+}
