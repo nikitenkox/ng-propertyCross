@@ -13,8 +13,13 @@ import { DetailsComponent } from './components/details/details.component';
 
 import { PropertyService } from './services/property.service';
 
+import { AppRoutingModule } from './routes/app-routing.module';
+
 @NgModule({
-  imports: [BrowserModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+    ],
   declarations: [
     AppComponent,
     SearchFormComponent,
