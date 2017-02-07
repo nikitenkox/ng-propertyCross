@@ -18,7 +18,7 @@ export class SearchResultsComponent implements OnInit {
     constructor(private prorertyService: PropertyService, private router: Router) { }
 
     ngOnInit() {
-        this.prorertyService.getRes()
+        this.prorertyService.searchResults(this.prorertyService.term)
             .then((res: any) => {
                 this.results = res.response.listings;
                 this.totalPages = res.response.total_pages;
