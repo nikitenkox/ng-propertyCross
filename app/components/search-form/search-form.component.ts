@@ -13,19 +13,14 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class SearchFormComponent {
-    resp: Observable<Object[]>;
+    resp: Observable<Object>;
+    searchVal: string;
 
     constructor(private router: Router, private prorertyService: PropertyService) { }
 
     gotoResults(): void {
+        this.prorertyService.search(this.searchVal);
         this.router.navigate(['/results']);
     }
 
-    search(location: string) {
-        this.prorertyService.search(location)
-            .subscribe(res => {
-                this.resp = res.response.listings;
-                console.log(res);
-            });
-    }
 }

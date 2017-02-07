@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { JsonpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './components/app/app.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
@@ -10,7 +11,7 @@ import { ListedLocationsStateComponent } from './components/listed-locations-sta
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { ResultItemComponent } from './components/result-item/result-item.component';
 import { FavouritesComponent } from './components/favourites/favourites.component';
-import { DetailsComponent } from './components/details/details.component';
+import { PropertyDetailsComponent } from './components/details/property-details.component';
 
 import { PropertyService } from './services/property.service';
 
@@ -20,7 +21,8 @@ import { AppRoutingModule } from './routes/app-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    JsonpModule
+    JsonpModule,
+    FormsModule
     ],
   declarations: [
     AppComponent,
@@ -31,7 +33,7 @@ import { AppRoutingModule } from './routes/app-routing.module';
     SearchResultsComponent,
     ResultItemComponent,
     FavouritesComponent,
-    DetailsComponent
+    PropertyDetailsComponent
   ],
   bootstrap: [AppComponent],
   providers: [PropertyService]

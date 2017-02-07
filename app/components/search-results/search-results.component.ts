@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { PropertyService } from '../../services/property.service';
 
 @Component({
     moduleId: module.id,
@@ -7,6 +10,23 @@ import { Component } from '@angular/core';
     styleUrls: ['./search-results.component.css']
 })
 
-export class SearchResultsComponent {
+export class SearchResultsComponent implements OnInit {
+    results: any;
+    totalResults: number;
+    totalPages: number;
 
+    constructor(private prorertyService: PropertyService, private router: Router) { }
+
+    ngOnInit() {
+        this.prorertyService.getRes()
+            .then((res: any) => {
+                this.results = res.response.listings;
+                this.totalPages = res.response.total_pages;
+                this.totalResults = res.response.total_results;
+            });
+    }
+
+    goBack() {
+        this.router.navigate(['']);
+    }
 }
