@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { JsonpModule } from '@angular/http';
 
 import { AppComponent } from './components/app/app.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
@@ -18,7 +19,8 @@ import { AppRoutingModule } from './routes/app-routing.module';
 @NgModule({
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    JsonpModule
     ],
   declarations: [
     AppComponent,
