@@ -5,8 +5,11 @@
         Use the form below to search for houses to buy. You can search by place-name, postcode, or click 'My location', to search
         in your current location!
     </p>
-    <form>
-        <input type="text" placeholder="what are you looking for?">
+    <form (submit)="gotoResults()">
+        <input type="text" placeholder="what are you looking for?" #location (keyup)="search(location.value)" />
+        <ul>
+            <li *ngFor="let item of resp"> * {{item.summary}}</li>
+        </ul>
         <div class="button-wrap">
             <button type="submit">Go</button>
             <button>My location</button>
