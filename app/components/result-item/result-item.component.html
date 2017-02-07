@@ -1,10 +1,11 @@
-<div class="item-wrap">
-    <figure>
-        <!--<img src="../../../assets/images/house-xxl.png">-->
-        <img src="{{item.img_url}}">
-    </figure>
-    <div class="content">
-        <h3>{{item.title}}</h3>
-        <p>{{item.price_formatted}}</p>
+<a [routerLink]="['/detail', index]">
+    <div class="item-wrap">
+        <figure>
+            <img src="{{item.img_url}}">
+        </figure>
+        <div class="content">
+            <h3>{{item.title}}</h3>
+            <p>{{item.price_formatted}}</p>
+        </div>
     </div>
-</div>
+</a>

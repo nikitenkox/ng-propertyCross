@@ -10,4 +10,6 @@ import { Component, Input } from '@angular/core';
 export class ResultItemComponent {
     @Input()
     item: Object;
+    @Input()
+    index: number;
 }

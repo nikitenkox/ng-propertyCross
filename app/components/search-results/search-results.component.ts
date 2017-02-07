@@ -11,7 +11,7 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class SearchResultsComponent implements OnInit {
-    results: any;
+    results: Object[];
     totalResults: number;
     totalPages: number;
 
