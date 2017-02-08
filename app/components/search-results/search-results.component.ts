@@ -11,9 +11,7 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class SearchResultsComponent implements OnInit {
-    results: Object;
-    totalResults: number;
-    totalPages: number;
+    response: Object;
 
     constructor(private propertyService: PropertyService, private router: Router) { }
 
@@ -26,9 +24,7 @@ export class SearchResultsComponent implements OnInit {
             });*/
         this.propertyService.searchRes(this.propertyService.term)
             .subscribe((res: any) => {
-                this.results = res.response.listings;
-                this.totalPages = res.response.total_pages;
-                this.totalResults = res.response.total_results;
+                this.response = res;
             });
     }
 
