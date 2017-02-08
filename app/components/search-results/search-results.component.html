@@ -1,3 +1,8 @@
-<h2>results count: {{response?.total_results}}, pages: {{response?.total_pages}}</h2>
-<button (click)="goBack()">Back</button>
-<result-item *ngFor="let item of response?.listings; let i = index;" [item]="item" [index]="i"></result-item>
+<div *ngIf="response">
+    <h2>results count: {{response?.total_results}}, pages: {{response?.total_pages}}</h2>
+    <h2>current page is {{response?.page}}</h2>
+    <button (click)="prevPage()">Previous page</button>
+    <button (click)="goBack()">Home</button>
+    <result-item *ngFor="let item of response?.listings; let i = index;" [item]="item" [index]="i"></result-item>
+    <button (click)="nextPage()">Next Page</button>
+</div>

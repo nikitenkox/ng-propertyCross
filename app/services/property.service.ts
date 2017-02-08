@@ -7,15 +7,17 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PropertyService {
     api: string = 'http://api.nestoria.co.uk/api';
-    results: any;
     item: Observable<Object>;
     term: string = '';
+    page: number;
 
     constructor(private jsonp: Jsonp) { }
 
-    searchRes(term: string): Observable<Object> {
+    searchRes(term: string, page: number = 1): Observable<Object> {
+        this.page = page;
         let searchParams = this.setDefaultSearchParams();
         searchParams.set('place_name', term);
+        searchParams.append('page', page.toString());
         return this.jsonp.get(this.api, { search: searchParams })
             .map(res => res.json().response);
     }
@@ -35,6 +37,7 @@ export class PropertyService {
     searchSingle(id: number) {
         let searchParams = this.setDefaultSearchParams();
         searchParams.set('place_name', this.term);
+        searchParams.append('page', this.page.toString());
         return this.jsonp.get(this.api, { search: searchParams })
             .map(res => res.json().response.listings[id]);
     }
@@ -42,25 +45,4 @@ export class PropertyService {
     search(term: string) {
         this.term = term;
     }
-
-    /*searchResults(term: string): Promise<any> {
-        return new Promise(resolve => {
-            let api = 'http://api.nestoria.co.uk/api';
-            let searchParams: URLSearchParams = new URLSearchParams();
-            searchParams.set('country', 'uk');
-            searchParams.set('pretty', '1');
-            searchParams.set('action', 'search_listings');
-            searchParams.set('encoding', 'json');
-            searchParams.set('listing_type', 'buy');
-            searchParams.set('place_name', term);
-            searchParams.set('number_of_results', '50');
-            searchParams.set('callback', 'JSONP_CALLBACK');
-            this.jsonp
-                .get(api, { search: searchParams })
-                .map(response => response.json())
-                .subscribe((res: any) => {
-                    resolve(res);
-                });
-        });
-}*/
 }

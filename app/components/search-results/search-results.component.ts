@@ -12,17 +12,12 @@ import { PropertyService } from '../../services/property.service';
 
 export class SearchResultsComponent implements OnInit {
     response: Object;
+    page: number = 1;
 
     constructor(private propertyService: PropertyService, private router: Router) { }
 
     ngOnInit() {
-        /*this.propertyService.searchResults(this.propertyService.term)
-            .then((res: any) => {
-                this.results = res.response.listings;
-                this.totalPages = res.response.total_pages;
-                this.totalResults = res.response.total_results;
-            });*/
-        this.propertyService.searchRes(this.propertyService.term)
+        this.propertyService.searchRes(this.propertyService.term, this.page)
             .subscribe((res: any) => {
                 this.response = res;
             });
@@ -30,5 +25,22 @@ export class SearchResultsComponent implements OnInit {
 
     goBack() {
         this.router.navigate(['']);
+    }
+
+    prevPage() {
+        this.page--;
+        this.propertyService.searchRes(this.propertyService.term, this.page)
+            .subscribe((res: any) => {
+                this.response = res;
+            });
+    }
+
+    nextPage() {
+        this.page++;
+        this.propertyService.searchRes(this.propertyService.term, this.page)
+            .subscribe((res: any) => {
+                this.response = res;
+            });
+        window.scrollTo(0, 0);
     }
 }
