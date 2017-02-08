@@ -29,6 +29,7 @@ export class SearchResultsComponent implements OnInit {
     }
 
     goBack() {
+        this.propertyService.page.next(1);
         this.router.navigate(['']);
     }
 
