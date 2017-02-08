@@ -20,7 +20,7 @@ export class SearchFormComponent {
         this.router.navigate(['/results']);
     }
 
-    getLocation(event: Event) {
+    getLocation(event: Event): void {
         // ********* Fake coords (Liverpool) **********
         // this.prorertyService.latitude.next(53.41058);
         // this.prorertyService.longitude.next(-2.97794);

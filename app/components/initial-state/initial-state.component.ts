@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { PropertyService } from '../../services/property.service';
+
 @Component({
     moduleId: module.id,
     selector: 'initial-state',
@@ -8,4 +10,9 @@ import { Component } from '@angular/core';
 })
 
 export class InitialStateComponent {
+    recentSearch: string[];
+
+    constructor(private propertyService: PropertyService) {
+        this.recentSearch = this.propertyService.resentSearchesSetter();
+    }
 }
