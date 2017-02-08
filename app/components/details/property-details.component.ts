@@ -24,6 +24,5 @@ export class PropertyDetailsComponent implements OnInit {
 
     goBack() {
         this.location.back();
-        this.propertyService.searchRes(this.propertyService.term, this.propertyService.page);
     }
 }
