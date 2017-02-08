@@ -21,4 +21,9 @@ export class PropertyDetailsComponent implements OnInit {
         this.propertyService.searchSingle(id)
             .subscribe(item => this.item = item);
     }
+
+    goBack() {
+        this.location.back();
+        this.propertyService.searchRes(this.propertyService.term, this.propertyService.page);
+    }
 }

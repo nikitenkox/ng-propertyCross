@@ -12,12 +12,17 @@ import { PropertyService } from '../../services/property.service';
 
 export class SearchResultsComponent implements OnInit {
     response: Object;
-    page: number = 1;
+    page: number;
+    term: string;
 
     constructor(private propertyService: PropertyService, private router: Router) { }
 
     ngOnInit() {
-        this.propertyService.searchRes(this.propertyService.term, this.page)
+        this.propertyService.page
+            .subscribe(page => this.page = page);
+        this.propertyService.queryTerm
+            .subscribe(term => this.term = term);
+        this.propertyService.searchRes(this.term, this.page)
             .subscribe((res: any) => {
                 this.response = res;
             });
@@ -29,7 +34,8 @@ export class SearchResultsComponent implements OnInit {
 
     prevPage() {
         this.page--;
-        this.propertyService.searchRes(this.propertyService.term, this.page)
+        this.propertyService.page.next(this.page);
+        this.propertyService.searchRes(this.term, this.page)
             .subscribe((res: any) => {
                 this.response = res;
             });
@@ -37,7 +43,8 @@ export class SearchResultsComponent implements OnInit {
 
     nextPage() {
         this.page++;
-        this.propertyService.searchRes(this.propertyService.term, this.page)
+        this.propertyService.page.next(this.page);
+        this.propertyService.searchRes(this.term, this.page)
             .subscribe((res: any) => {
                 this.response = res;
             });

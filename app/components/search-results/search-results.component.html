@@ -1,5 +1,5 @@
 <div *ngIf="response">
-    <h2>results count: {{response?.total_results}}, pages: {{response?.total_pages}}</h2>
+    <h2>results count: {{response?.total_results}}, pages: {{response?.total_pages + 1}}</h2>
     <h2>current page is {{response?.page}}</h2>
     <button (click)="prevPage()">Previous page</button>
     <button (click)="goBack()">Home</button>
