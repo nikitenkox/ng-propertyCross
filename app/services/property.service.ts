@@ -7,15 +7,31 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PropertyService {
     results: any;
+    item: Observable<Object>;
     term: string;
 
     constructor(private jsonp: Jsonp) { }
+
+    searchRes(term: string): Observable<Object> {
+        let api = 'http://api.nestoria.co.uk/api';
+        let searchParams: URLSearchParams = new URLSearchParams();
+        searchParams.set('country', 'uk');
+        searchParams.set('pretty', '1');
+        searchParams.set('action', 'search_listings');
+        searchParams.set('encoding', 'json');
+        searchParams.set('listing_type', 'buy');
+        searchParams.set('place_name', term);
+        searchParams.set('number_of_results', '50');
+        searchParams.set('callback', 'JSONP_CALLBACK');
+        return this.jsonp.get(api, { search: searchParams })
+            .map(res => res.json());
+    }
 
     search(term: string) {
         this.term = term;
     }
 
-    searchResults(term: string): Promise<any> {
+    /*searchResults(term: string): Promise<any> {
         return new Promise(resolve => {
             let api = 'http://api.nestoria.co.uk/api';
             let searchParams: URLSearchParams = new URLSearchParams();
@@ -34,5 +50,5 @@ export class PropertyService {
                     resolve(res);
                 });
         });
-    }
+}*/
 }

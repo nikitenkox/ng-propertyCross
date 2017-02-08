@@ -11,15 +11,21 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class SearchResultsComponent implements OnInit {
-    results: Object[];
+    results: Object;
     totalResults: number;
     totalPages: number;
 
-    constructor(private prorertyService: PropertyService, private router: Router) { }
+    constructor(private propertyService: PropertyService, private router: Router) { }
 
     ngOnInit() {
-        this.prorertyService.searchResults(this.prorertyService.term)
+        /*this.propertyService.searchResults(this.propertyService.term)
             .then((res: any) => {
+                this.results = res.response.listings;
+                this.totalPages = res.response.total_pages;
+                this.totalResults = res.response.total_results;
+            });*/
+        this.propertyService.searchRes(this.propertyService.term)
+            .subscribe((res: any) => {
                 this.results = res.response.listings;
                 this.totalPages = res.response.total_pages;
                 this.totalResults = res.response.total_results;
