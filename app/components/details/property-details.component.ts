@@ -18,8 +18,10 @@ export class PropertyDetailsComponent implements OnInit {
 
     ngOnInit() {
         let id = +this.route.snapshot.params['id'];
-        this.propertyService.searchSingle(id)
-            .subscribe(item => this.item = item);
+        this.propertyService.results
+            .subscribe((res: any) => {
+                this.item = res.listings[id];
+            });
     }
 
     goBack() {

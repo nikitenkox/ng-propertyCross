@@ -17,22 +17,27 @@ export class SearchFormComponent {
     constructor(private router: Router, private propertyService: PropertyService) { }
 
     gotoResults(): void {
-        // this.propertyService.queryTerm.next(this.searchVal);
         this.propertyService.searchProperties(this.searchVal, this.page);
         this.router.navigate(['/results'], { queryParams: { term: this.searchVal, page: this.page } });
     }
 
     getLocation(event: Event): void {
         // ********* Fake coords (Liverpool) **********
-        // this.propertyService.latitude.next(53.41058);
-        // this.propertyService.longitude.next(-2.97794);
-        this.router.navigate(['/results']);
+        // latitude - (53.41058);
+        // longitude - (-2.97794);
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                this.propertyService.latitude.next(position.coords.latitude);
-                this.propertyService.longitude.next(position.coords.longitude);
+                // this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page);
+                this.propertyService
+                    .searchByCoords(53.41058, -2.97794, this.page);
+                /*this.router
+                    .navigate(['/results'], {
+                        queryParams: {
+                            latitude: position.coords.latitude, longitude: position.coords.longitude, page: this.page
+                        }
+                    });*/
+                // .navigate(['/results'], { queryParams: { latitude: 53.41058, longitude: -2.97794, page: this.page } });
             });
         }
     }
-
 }

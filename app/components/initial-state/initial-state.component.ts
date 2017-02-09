@@ -10,9 +10,7 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class InitialStateComponent {
-    recentSearch: string[];
 
     constructor(private propertyService: PropertyService) {
-        this.recentSearch = this.propertyService.resentSearchesSetter();
     }
 }

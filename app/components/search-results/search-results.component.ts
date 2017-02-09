@@ -12,80 +12,53 @@ import { PropertyService } from '../../services/property.service';
 
 export class SearchResultsComponent implements OnInit {
     response: Object;
-
-
     page: number;
     term: string;
     latitude: number;
     longitude: number;
 
-    constructor(private activeRoute: ActivatedRoute , private propertyService: PropertyService, private router: Router) { }
+    constructor(private activatedRoute: ActivatedRoute, private propertyService: PropertyService, private router: Router) { }
 
     ngOnInit() {
-        this.activeRoute.queryParams
-            .subscribe(d => console.log(d['page']));
-        this.propertyService.results.subscribe(res => this.response = res);
-        /*this.propertyService.page
-            .subscribe(page => this.page = page);
-        this.propertyService.queryTerm
-            .subscribe(term => this.term = term);
-        this.propertyService.latitude
-            .subscribe(lat => this.latitude = lat);
-        this.propertyService.longitude
-            .subscribe(long => this.longitude = long);
-        if (this.latitude !== 0 || this.longitude !== 0) {
-            this.propertyService.searchByLocation(this.latitude, this.longitude, this.page)
-                .subscribe(res => {
-                    this.response = res;
-                });
-        } else {
-            this.propertyService.searchRes(this.term, this.page)
-                .subscribe((res: any) => {
-                    this.response = res;
-                });
-        }*/
+        this.activatedRoute.queryParams
+            .subscribe(params => {
+                this.page = params['page'];
+                this.term = params['term'] || undefined;
+                this.latitude = params['latitude'] || undefined;
+                this.longitude = params['longitude'] || undefined;
+                console.log(params);
+            });
+        this.propertyService.results
+            .subscribe(res => this.response = res);
     }
 
     goBack() {
-        /*this.propertyService.page.next(1);
-        this.propertyService.latitude.next(0);
-        this.propertyService.longitude.next(0);
-        this.propertyService.queryTerm.next('');*/
         this.router.navigate(['']);
+        this.latitude = undefined;
+        this.longitude = undefined;
+        this.page = 1;
+        this.term = undefined;
+    }
+
+    navigateToPage() {
+        if (this.latitude !== undefined || this.longitude !== undefined) {
+            this.router.navigate(['/results'], { queryParams: { latitude: this.latitude, longitude: this.longitude, page: this.page } });
+            // this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page);
+            this.propertyService.searchByCoords(53.41058, -2.97794, this.page);
+        } else {
+            this.router.navigate(['/results'], { queryParams: { term: this.term, page: this.page } });
+            this.propertyService.searchProperties(this.term, this.page);
+        }
     }
 
     prevPage() {
-
-        /*this.page--;
-        this.propertyService.page.next(this.page);
-        if (this.latitude !== 0 || this.longitude !== 0) {
-            this.propertyService.searchByLocation(this.latitude, this.longitude, this.page)
-                .subscribe(res => {
-                    this.response = res;
-                });
-        } else {
-            this.propertyService.searchRes(this.term, this.page)
-                .subscribe((res: any) => {
-                    this.response = res;
-                });
-        }*/
+        --this.page;
+        this.navigateToPage();
     }
 
     nextPage() {
-        this.propertyService.searchProperties('leeds', 2);
-        /*this.page++;
-        this.propertyService.page.next(this.page);
-        if (this.latitude !== 0 || this.longitude !== 0) {
-            this.propertyService.searchByLocation(this.latitude, this.longitude, this.page)
-                .subscribe(res => {
-                    this.response = res;
-                });
-        } else {
-            this.propertyService.searchRes(this.term, this.page)
-                .subscribe((res: any) => {
-                    this.response = res;
-                });
-        }*/
+        ++this.page;
+        this.navigateToPage();
         window.scrollTo(0, 0);
     }
 }
