@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { PropertyService } from '../../services/property.service';
 
@@ -19,9 +19,11 @@ export class SearchResultsComponent implements OnInit {
     latitude: number;
     longitude: number;
 
-    constructor(private propertyService: PropertyService, private router: Router) { }
+    constructor(private activeRoute: ActivatedRoute , private propertyService: PropertyService, private router: Router) { }
 
     ngOnInit() {
+        this.activeRoute.queryParams
+            .subscribe(d => console.log(d['page']));
         this.propertyService.results.subscribe(res => this.response = res);
         /*this.propertyService.page
             .subscribe(page => this.page = page);

@@ -12,13 +12,14 @@ import { PropertyService } from '../../services/property.service';
 
 export class SearchFormComponent {
     searchVal: string;
+    page: number = 1;
 
     constructor(private router: Router, private propertyService: PropertyService) { }
 
     gotoResults(): void {
         // this.propertyService.queryTerm.next(this.searchVal);
-        this.propertyService.searchProperties(this.searchVal, 1);
-        this.router.navigate(['/results']);
+        this.propertyService.searchProperties(this.searchVal, this.page);
+        this.router.navigate(['/results'], { queryParams: { term: this.searchVal, page: this.page } });
     }
 
     getLocation(event: Event): void {
