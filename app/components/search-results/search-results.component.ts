@@ -12,6 +12,8 @@ import { PropertyService } from '../../services/property.service';
 
 export class SearchResultsComponent implements OnInit {
     response: Object;
+
+
     page: number;
     term: string;
     latitude: number;
@@ -20,7 +22,8 @@ export class SearchResultsComponent implements OnInit {
     constructor(private propertyService: PropertyService, private router: Router) { }
 
     ngOnInit() {
-        this.propertyService.page
+        this.propertyService.results.subscribe(res => this.response = res);
+        /*this.propertyService.page
             .subscribe(page => this.page = page);
         this.propertyService.queryTerm
             .subscribe(term => this.term = term);
@@ -38,19 +41,20 @@ export class SearchResultsComponent implements OnInit {
                 .subscribe((res: any) => {
                     this.response = res;
                 });
-        }
+        }*/
     }
 
     goBack() {
-        this.propertyService.page.next(1);
+        /*this.propertyService.page.next(1);
         this.propertyService.latitude.next(0);
         this.propertyService.longitude.next(0);
-        this.propertyService.queryTerm.next('');
+        this.propertyService.queryTerm.next('');*/
         this.router.navigate(['']);
     }
 
     prevPage() {
-        this.page--;
+
+        /*this.page--;
         this.propertyService.page.next(this.page);
         if (this.latitude !== 0 || this.longitude !== 0) {
             this.propertyService.searchByLocation(this.latitude, this.longitude, this.page)
@@ -62,11 +66,12 @@ export class SearchResultsComponent implements OnInit {
                 .subscribe((res: any) => {
                     this.response = res;
                 });
-        }
+        }*/
     }
 
     nextPage() {
-        this.page++;
+        this.propertyService.searchProperties('leeds', 2);
+        /*this.page++;
         this.propertyService.page.next(this.page);
         if (this.latitude !== 0 || this.longitude !== 0) {
             this.propertyService.searchByLocation(this.latitude, this.longitude, this.page)
@@ -78,7 +83,7 @@ export class SearchResultsComponent implements OnInit {
                 .subscribe((res: any) => {
                     this.response = res;
                 });
-        }
+        }*/
         window.scrollTo(0, 0);
     }
 }

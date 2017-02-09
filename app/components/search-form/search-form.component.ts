@@ -13,22 +13,23 @@ import { PropertyService } from '../../services/property.service';
 export class SearchFormComponent {
     searchVal: string;
 
-    constructor(private router: Router, private prorertyService: PropertyService) { }
+    constructor(private router: Router, private propertyService: PropertyService) { }
 
     gotoResults(): void {
-        this.prorertyService.queryTerm.next(this.searchVal);
+        // this.propertyService.queryTerm.next(this.searchVal);
+        this.propertyService.searchProperties(this.searchVal, 1);
         this.router.navigate(['/results']);
     }
 
     getLocation(event: Event): void {
         // ********* Fake coords (Liverpool) **********
-        // this.prorertyService.latitude.next(53.41058);
-        // this.prorertyService.longitude.next(-2.97794);
+        // this.propertyService.latitude.next(53.41058);
+        // this.propertyService.longitude.next(-2.97794);
         this.router.navigate(['/results']);
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                this.prorertyService.latitude.next(position.coords.latitude);
-                this.prorertyService.longitude.next(position.coords.longitude);
+                this.propertyService.latitude.next(position.coords.latitude);
+                this.propertyService.longitude.next(position.coords.longitude);
             });
         }
     }

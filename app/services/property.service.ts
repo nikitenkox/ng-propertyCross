@@ -8,6 +8,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PropertyService {
     api: string = 'http://api.nestoria.co.uk/api';
+
+    private _results: BehaviorSubject<Object[]> = new BehaviorSubject([]);
+    public results: Observable<Object[]> = this._results.asObservable();
+
     resentSearchArr: string[] = [];
     page = new BehaviorSubject(1);
     queryTerm = new BehaviorSubject('');
@@ -15,6 +19,16 @@ export class PropertyService {
     longitude = new BehaviorSubject(0);
 
     constructor(private jsonp: Jsonp) { }
+
+    searchProperties(term: string, page: number) {
+        let searchParams = this.setDefaultSearchParams();
+        searchParams.set('place_name', term);
+        searchParams.set('page', page.toString());
+        let obs = this.jsonp.get(this.api, { search: searchParams })
+            .map(res => res.json().response)
+            .subscribe(res => this._results.next(res));
+        return obs;
+    }
 
     searchRes(term: string, page: number): Observable<Object> {
         let searchParams = this.setDefaultSearchParams();
@@ -78,3 +92,7 @@ export class PropertyService {
         return this.resentSearchArr;
     }
 }
+/*
+BehaviorSubject (private) is list of returned houses
+return this list as: return this.list.asObservable()
+*/
