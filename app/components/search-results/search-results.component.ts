@@ -29,7 +29,10 @@ export class SearchResultsComponent implements OnInit {
                 console.log(params);
             });
         this.propertyService.results
-            .subscribe(res => this.response = res);
+            .subscribe((res: any) => {
+                this.response = res;
+                console.log(res.application_response_code);
+            });
     }
 
     goBack() {

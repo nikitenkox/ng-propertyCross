@@ -30,13 +30,13 @@ export class SearchFormComponent {
                 // this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page);
                 this.propertyService
                     .searchByCoords(53.41058, -2.97794, this.page);
-                /*this.router
-                    .navigate(['/results'], {
-                        queryParams: {
-                            latitude: position.coords.latitude, longitude: position.coords.longitude, page: this.page
-                        }
-                    });*/
-                // .navigate(['/results'], { queryParams: { latitude: 53.41058, longitude: -2.97794, page: this.page } });
+                this.router
+                    .navigate(['/results'], { queryParams: { latitude: 53.41058, longitude: -2.97794, page: this.page } });
+                /*.navigate(['/results'], {
+                    queryParams: {
+                        latitude: position.coords.latitude, longitude: position.coords.longitude, page: this.page
+                    }
+                });*/
             });
         }
     }
