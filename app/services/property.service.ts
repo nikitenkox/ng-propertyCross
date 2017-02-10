@@ -13,31 +13,6 @@ export class PropertyService {
 
     constructor(private jsonp: Jsonp) { }
 
-    rec() {
-        let arr: any[] = [];
-        this.results
-            .subscribe(data => arr.push(data));
-        return arr;
-    }
-
-    private save() {
-        try {
-            localStorage.setItem('recentSearches', JSON.stringify(this.recentSearches));
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    private load() {
-        try {
-            this.recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-
-
     searchProperties(term: string, page: number) {
         let searchParams = this.setDefaultSearchParams();
         searchParams.set('place_name', term);

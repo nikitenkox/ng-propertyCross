@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PropertyService } from '../../services/property.service';
@@ -13,11 +13,17 @@ import { PropertyService } from '../../services/property.service';
 export class SearchFormComponent {
     searchVal: string;
     page: number = 1;
+    @Output()
+    sendSearchVal = new EventEmitter();
 
     constructor(private router: Router, private propertyService: PropertyService) { }
 
     gotoResults(): void {
-        this.propertyService.searchProperties(this.searchVal, this.page);
+        this.sendSearchVal.emit({
+            value: this.searchVal,
+            page: this.page
+        });
+        // this.propertyService.searchProperties(this.searchVal, this.page);
         // this.router.navigate(['/results'], { queryParams: { term: this.searchVal, page: this.page } });
     }
 
@@ -27,9 +33,20 @@ export class SearchFormComponent {
         // longitude - (-2.97794);
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
+                this.sendSearchVal.emit({
+                    latitude: 53.41058,
+                    longitude: -2.97794,
+                    page: this.page
+                });
+                /*this.sendCoords.emit({
+                    value: undefined,
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    page: this.page
+                });*/
                 // this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page);
-                this.propertyService
-                    .searchByCoords(53.41058, -2.97794, this.page);
+                /*this.propertyService
+                    .searchByCoords(53.41058, -2.97794, this.page);*/
                 /*this.router
                     .navigate(['/results'], { queryParams: { latitude: 53.41058, longitude: -2.97794, page: this.page } });*/
 

@@ -26,7 +26,6 @@ export class SearchResultsComponent implements OnInit {
                 this.term = params['term'] || undefined;
                 this.latitude = params['latitude'] || undefined;
                 this.longitude = params['longitude'] || undefined;
-                console.log(params);
             });
         this.propertyService.results
             .subscribe((res: any) => {
