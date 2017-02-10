@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { PropertyService } from '../../services/property.service';
@@ -10,8 +10,9 @@ import { PropertyService } from '../../services/property.service';
     styleUrls: ['./search-results.component.css']
 })
 
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
     response: Object;
+    prevRes: Object;
     page: number;
     term: string;
     latitude: number;
@@ -26,11 +27,25 @@ export class SearchResultsComponent implements OnInit {
                 this.term = params['term'] || undefined;
                 this.latitude = params['latitude'] || undefined;
                 this.longitude = params['longitude'] || undefined;
+                this.propertyService.searchByWord(this.term, this.page)
+                    .subscribe(res => this.response = res.response);
             });
-        this.propertyService.results
+            console.log('this.propertyService.results');
+        /*this.propertyService.results
             .subscribe((res: any) => {
                 this.response = res.response;
-            });
+                this.prevRes = res;
+            });*/
+
+        /*this.propertyService.results
+            .subscribe((res: any) => {
+                this.response = res.response;
+                console.log('search' + res);
+            });*/
+    }
+
+    ngOnDestroy() {
+        console.log('dest');
     }
 
     goBack() {
@@ -48,7 +63,7 @@ export class SearchResultsComponent implements OnInit {
             this.propertyService.searchByCoords(53.41058, -2.97794, this.page);
         } else {
             this.router.navigate(['/results'], { queryParams: { term: this.term, page: this.page } });
-            this.propertyService.searchProperties(this.term, this.page);
+            this.propertyService.searchByWord(this.term, this.page);
         }
     }
 

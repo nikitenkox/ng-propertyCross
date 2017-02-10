@@ -1,11 +1,8 @@
 <search-form (sendSearchVal)="getSearchVal($event)"></search-form>
 <div class="recent-searches">
     <h2>Recent searches</h2>
-    <ul>
-        <li *ngFor="let search of recentSearches">{{search?.request?.location}} ({{search?.response?.total_results}})</li>
-    </ul>
 </div>
-<div class="error-wrap">
+<div class="error-wrap" *ngIf="lastSearch?.response?.application_response_code >= 200">
     <h2>Error</h2>
 </div>
 <div class="listed-locations">

@@ -11,17 +11,24 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class InitialStateComponent {
-    recentSearches: any[] = [];
+    // recentSearches: any[] = [];
+    lastSearch: any;
 
     constructor(private router: Router, private propertyService: PropertyService) {
 
     }
 
     getSearchVal(search: any) {
-        console.log(search);
         if (search.value !== undefined) {
-            this.propertyService.searchProperties(search.value, search.page);
-            this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
+            this.propertyService.searchByWord(search.value, search.page)
+                .subscribe((res: any) => {
+                    let status = res.response.application_response_code;
+                    console.log(status);
+                    this.propertyService.results = res;
+                    this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
+                });
+            // this.propertyService.searchProperties(search.value, search.page);
+            // this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
         } else {
             this.propertyService.searchByCoords(search.latitude, search.longitude, search.page);
             this.router.navigate(['/results'], {
@@ -32,7 +39,5 @@ export class InitialStateComponent {
                 }
             });
         }
-        /*this.propertyService.searchProperties(search.value, search.page);
-        this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });*/
     }
 }

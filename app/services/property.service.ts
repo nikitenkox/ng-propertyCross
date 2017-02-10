@@ -8,18 +8,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PropertyService {
     api: string = 'http://api.nestoria.co.uk/api';
-    private _results: BehaviorSubject<Object> = new BehaviorSubject([]);
+    public _results: BehaviorSubject<Object> = new BehaviorSubject([]);
     public results: Observable<Object> = this._results.asObservable();
 
     constructor(private jsonp: Jsonp) { }
 
-    searchProperties(term: string, page: number) {
+    searchByWord(term: string, page: number) {
         let searchParams = this.setDefaultSearchParams();
         searchParams.set('place_name', term);
         searchParams.set('page', page.toString());
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json())
-            .subscribe(res => this._results.next(res));
+            .map(res => res.json());
+        // obs.subscribe(res => this._results.next(res));
         return obs;
     }
 
@@ -28,8 +28,8 @@ export class PropertyService {
         searchParams.set('page', page.toString());
         searchParams.set('centre_point', + latitude + ',' + longitude);
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json())
-            .subscribe(res => this._results.next(res));
+            .map(res => res.json());
+        // obs.subscribe(res => this._results.next(res));
         return obs;
     }
 
@@ -44,5 +44,26 @@ export class PropertyService {
         searchParams.set('callback', 'JSONP_CALLBACK');
         return searchParams;
     }
+
+
+    /*searchProperties(term: string, page: number) {
+    let searchParams = this.setDefaultSearchParams();
+    searchParams.set('place_name', term);
+    searchParams.set('page', page.toString());
+    let obs = this.jsonp.get(this.api, { search: searchParams })
+        .map(res => res.json())
+        .subscribe(res => this._results.next(res));
+    return obs;
+    }*/
+
+    /*searchByCoords(latitude: number, longitude: number, page: number) {
+        let searchParams = this.setDefaultSearchParams();
+        searchParams.set('page', page.toString());
+        searchParams.set('centre_point', + latitude + ',' + longitude);
+        let obs = this.jsonp.get(this.api, { search: searchParams })
+            .map(res => res.json())
+            .subscribe(res => this._results.next(res));
+        return obs;
+    }*/
 }
 
