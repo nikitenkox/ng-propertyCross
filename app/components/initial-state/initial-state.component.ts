@@ -11,8 +11,7 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class InitialStateComponent {
-    // recentSearches: any[] = [];
-    lastSearch: any;
+
 
     constructor(private router: Router, private propertyService: PropertyService) {
 
@@ -23,12 +22,13 @@ export class InitialStateComponent {
             this.propertyService.searchByWord(search.value, search.page)
                 .subscribe((res: any) => {
                     let status = res.response.application_response_code;
-                    console.log(status);
-                    this.propertyService.results = res;
-                    this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
+                    if (status < 200) {
+                        this.propertyService.results = res;
+                        this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
+                    } else {
+                        console.log('error');
+                    }
                 });
-            // this.propertyService.searchProperties(search.value, search.page);
-            // this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
         } else {
             this.propertyService.searchByCoords(search.latitude, search.longitude, search.page);
             this.router.navigate(['/results'], {

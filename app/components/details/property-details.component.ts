@@ -14,15 +14,20 @@ import { PropertyService } from '../../services/property.service';
 export class PropertyDetailsComponent implements OnInit {
     item: Object;
 
-    constructor(private location: Location, private route: ActivatedRoute, private propertyService: PropertyService) { }
+    constructor(
+        private location: Location,
+        private route: ActivatedRoute,
+        private propertyService: PropertyService) { }
 
     ngOnInit() {
+        console.log(this.propertyService.results);
         let id = +this.route.snapshot.params['id'];
-        this.propertyService.results
+        this.item = this.propertyService.results.response.listings[id];
+        /*this.propertyService.results
             .subscribe((res: any) => {
                 this.item = res.response.listings[id];
-            });
-    }
+            });*/
+       }
 
     goBack() {
         this.location.back();

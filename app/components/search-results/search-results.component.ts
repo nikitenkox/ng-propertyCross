@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { PropertyService } from '../../services/property.service';
@@ -10,9 +10,8 @@ import { PropertyService } from '../../services/property.service';
     styleUrls: ['./search-results.component.css']
 })
 
-export class SearchResultsComponent implements OnInit, OnDestroy {
+export class SearchResultsComponent implements OnInit {
     response: Object;
-    prevRes: Object;
     page: number;
     term: string;
     latitude: number;
@@ -28,24 +27,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                 this.latitude = params['latitude'] || undefined;
                 this.longitude = params['longitude'] || undefined;
                 this.propertyService.searchByWord(this.term, this.page)
-                    .subscribe(res => this.response = res.response);
+                    .subscribe(res => {
+                        this.response = res.response;
+                    });
             });
-            console.log('this.propertyService.results');
-        /*this.propertyService.results
-            .subscribe((res: any) => {
-                this.response = res.response;
-                this.prevRes = res;
-            });*/
-
-        /*this.propertyService.results
-            .subscribe((res: any) => {
-                this.response = res.response;
-                console.log('search' + res);
-            });*/
-    }
-
-    ngOnDestroy() {
-        console.log('dest');
     }
 
     goBack() {
@@ -59,11 +44,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     navigateToPage() {
         if (this.latitude !== undefined || this.longitude !== undefined) {
             this.router.navigate(['/results'], { queryParams: { latitude: this.latitude, longitude: this.longitude, page: this.page } });
-            // this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page);
-            this.propertyService.searchByCoords(53.41058, -2.97794, this.page);
+            /* this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page)
+                .subscribe(res => this.propertyService.results = res);*/
+            this.propertyService.searchByCoords(53.41058, -2.97794, this.page)
+                .subscribe(res => this.propertyService.results = res);
         } else {
             this.router.navigate(['/results'], { queryParams: { term: this.term, page: this.page } });
-            this.propertyService.searchByWord(this.term, this.page);
+            this.propertyService.searchByWord(this.term, this.page)
+                .subscribe(res => this.propertyService.results = res);
         }
     }
 
