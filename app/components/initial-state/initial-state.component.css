@@ -4,9 +4,13 @@ h2 {
     padding-left: 10%;
 }
 
-.recent-searches {
+.recent-searches, .listed-locations, .error-wrap {
     display: block;
     border: 1px solid black;
     height: 200px;
     margin: 10px;
+}
+
+ul li:first-child {
+    display: none;
 }

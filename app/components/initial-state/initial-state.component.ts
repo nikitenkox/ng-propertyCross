@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+// import { Router, ActivatedRoute } from '@angular/router';
 
 import { PropertyService } from '../../services/property.service';
 
@@ -10,7 +11,12 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class InitialStateComponent {
+    recentSearches: any[] = [];
 
     constructor(private propertyService: PropertyService) {
+        this.propertyService.results
+            .subscribe(data => {
+                this.recentSearches.push(data);
+            });
     }
 }

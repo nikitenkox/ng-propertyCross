@@ -20,7 +20,7 @@ export class PropertyDetailsComponent implements OnInit {
         let id = +this.route.snapshot.params['id'];
         this.propertyService.results
             .subscribe((res: any) => {
-                this.item = res.listings[id];
+                this.item = res.response.listings[id];
             });
     }
 

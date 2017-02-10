@@ -30,8 +30,7 @@ export class SearchResultsComponent implements OnInit {
             });
         this.propertyService.results
             .subscribe((res: any) => {
-                this.response = res;
-                console.log(res.application_response_code);
+                this.response = res.response;
             });
     }
 

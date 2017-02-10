@@ -8,17 +8,42 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PropertyService {
     api: string = 'http://api.nestoria.co.uk/api';
-    private _results: BehaviorSubject<Object[]> = new BehaviorSubject([]);
-    public results: Observable<Object[]> = this._results.asObservable();
+    private _results: BehaviorSubject<Object> = new BehaviorSubject([]);
+    public results: Observable<Object> = this._results.asObservable();
 
     constructor(private jsonp: Jsonp) { }
+
+    rec() {
+        let arr: any[] = [];
+        this.results
+            .subscribe(data => arr.push(data));
+        return arr;
+    }
+
+    private save() {
+        try {
+            localStorage.setItem('recentSearches', JSON.stringify(this.recentSearches));
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    private load() {
+        try {
+            this.recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
 
     searchProperties(term: string, page: number) {
         let searchParams = this.setDefaultSearchParams();
         searchParams.set('place_name', term);
         searchParams.set('page', page.toString());
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json().response)
+            .map(res => res.json())
             .subscribe(res => this._results.next(res));
         return obs;
     }
@@ -28,7 +53,7 @@ export class PropertyService {
         searchParams.set('page', page.toString());
         searchParams.set('centre_point', + latitude + ',' + longitude);
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json().response)
+            .map(res => res.json())
             .subscribe(res => this._results.next(res));
         return obs;
     }

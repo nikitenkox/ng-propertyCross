@@ -1,4 +1,13 @@
 <search-form></search-form>
-<h2>Recent searches</h2>
 <div class="recent-searches">
+    <h2>Recent searches</h2>
+    <ul>
+        <li *ngFor="let search of recentSearches">{{search?.request?.location}} ({{search?.response?.total_results}})</li>
+    </ul>
+</div>
+<div class="error-wrap">
+    <h2>Error</h2>
+</div>
+<div class="listed-locations">
+    <h2>Listed locations</h2>
 </div>
