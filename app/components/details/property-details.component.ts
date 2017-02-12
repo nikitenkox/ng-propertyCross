@@ -17,7 +17,8 @@ export class PropertyDetailsComponent implements OnInit {
     constructor(
         private location: Location,
         private route: ActivatedRoute,
-        private propertyService: PropertyService) { }
+        private propertyService: PropertyService
+    ) {}
 
     ngOnInit() {
         let id = +this.route.snapshot.params['id'];
@@ -25,7 +26,7 @@ export class PropertyDetailsComponent implements OnInit {
             .subscribe((res: any) => {
                 this.item = res.response.listings[id];
             });
-       }
+    }
 
     goBack() {
         this.location.back();

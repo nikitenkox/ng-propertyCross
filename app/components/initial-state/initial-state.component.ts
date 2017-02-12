@@ -11,19 +11,23 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class InitialStateComponent {
+    response: Object;
+    errorState: boolean = false;
+    initState: boolean = true;
 
     constructor(
         private router: Router,
-        private propertyService: PropertyService) { }
+        private propertyService: PropertyService
+    ) {}
 
     getSearchVal(search: any) {
         if (search.value !== undefined) {
             this.propertyService.searchByWord(search.value, search.page)
                 .subscribe((res: any) => {
+                    this.response = res.response;
                     let status = res.response.application_response_code;
                     if (status < 200) {
                         console.log('less 200');
-                        this.propertyService.results = res;
                         this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
                     } else {
                         console.log('error');

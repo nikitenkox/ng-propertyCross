@@ -8,10 +8,9 @@ import 'rxjs/add/operator/share';
 
 @Injectable()
 export class PropertyService {
-    api: string = 'http://api.nestoria.co.uk/api';
+    private api: string = 'http://api.nestoria.co.uk/api';
     private _results: BehaviorSubject<Object> = new BehaviorSubject([]);
     public result: Observable<Object> = this._results.asObservable();
-    public results: any;
 
     constructor(private jsonp: Jsonp) { }
 
