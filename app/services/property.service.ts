@@ -6,11 +6,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 
+import { RecentLocation } from '../shared/recent';
+
 @Injectable()
 export class PropertyService {
     private api: string = 'http://api.nestoria.co.uk/api';
     private _results: BehaviorSubject<Object> = new BehaviorSubject([]);
     public result: Observable<Object> = this._results.asObservable();
+    recentSearches: RecentLocation[] = [];
 
     constructor(private jsonp: Jsonp) { }
 
@@ -44,6 +47,38 @@ export class PropertyService {
         searchParams.set('number_of_results', '50');
         searchParams.set('callback', 'JSONP_CALLBACK');
         return searchParams;
+    }
+
+    getRecentSearches() {
+        if (localStorage.getItem('recent')) {
+            this.load();
+        } else {
+            this.save();
+        }
+        return this.recentSearches;
+    }
+
+    addRecent(location: string, count: number) {
+        this.load();
+        let item = new RecentLocation(location, count);
+        this.recentSearches.unshift(item);
+        this.save();
+    }
+
+    private save() {
+        try {
+            localStorage.setItem('recent', JSON.stringify(this.recentSearches));
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    private load() {
+        try {
+            this.recentSearches = JSON.parse(localStorage.getItem('recent'));
+        } catch (err) {
+            console.error(err);
+        }
     }
 }
 

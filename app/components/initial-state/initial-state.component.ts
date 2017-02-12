@@ -14,17 +14,28 @@ export class InitialStateComponent {
     response: Object;
     errorState: boolean = false;
     initState: boolean = true;
+    recentSearches: Object[];
 
     constructor(
         private router: Router,
         private propertyService: PropertyService
-    ) {}
+    ) {
+        this.recentSearches = this.propertyService.getRecentSearches();
+    }
+
+    moveToSearch(location: string) {
+        this.propertyService.searchByWord(location, 1);
+        this.router.navigate(['/results'], { queryParams: { term: location, page: 1 } });
+    }
 
     getSearchVal(search: any) {
         if (search.value !== undefined) {
             this.propertyService.searchByWord(search.value, search.page)
                 .subscribe((res: any) => {
                     this.response = res.response;
+                    let location = res.request.location;
+                    let count = res.response.total_results;
+                    this.propertyService.addRecent(location, count);
                     let status = res.response.application_response_code;
                     if (status < 200) {
                         console.log('less 200');
