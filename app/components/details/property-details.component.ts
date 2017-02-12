@@ -20,13 +20,11 @@ export class PropertyDetailsComponent implements OnInit {
         private propertyService: PropertyService) { }
 
     ngOnInit() {
-        console.log(this.propertyService.results);
         let id = +this.route.snapshot.params['id'];
-        this.item = this.propertyService.results.response.listings[id];
-        /*this.propertyService.results
+        this.propertyService.result
             .subscribe((res: any) => {
                 this.item = res.response.listings[id];
-            });*/
+            });
        }
 
     goBack() {

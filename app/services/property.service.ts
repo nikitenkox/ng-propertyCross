@@ -4,13 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 
 @Injectable()
 export class PropertyService {
     api: string = 'http://api.nestoria.co.uk/api';
-    public _results: BehaviorSubject<Object> = new BehaviorSubject([]);
-    // public results: Observable<Object> = this._results.asObservable();
-    public results: Object;
+    private _results: BehaviorSubject<Object> = new BehaviorSubject([]);
+    public result: Observable<Object> = this._results.asObservable();
+    public results: any;
 
     constructor(private jsonp: Jsonp) { }
 
@@ -19,7 +20,8 @@ export class PropertyService {
         searchParams.set('place_name', term);
         searchParams.set('page', page.toString());
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json());
+            .map(res => res.json()).share();
+        obs.subscribe(res => this._results.next(res));
         return obs;
     }
 
@@ -28,7 +30,8 @@ export class PropertyService {
         searchParams.set('page', page.toString());
         searchParams.set('centre_point', + latitude + ',' + longitude);
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json());
+            .map(res => res.json()).share();
+        obs.subscribe(res => this._results.next(res));
         return obs;
     }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router/*, ActivatedRoute*/ } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { PropertyService } from '../../services/property.service';
 
@@ -12,10 +12,9 @@ import { PropertyService } from '../../services/property.service';
 
 export class InitialStateComponent {
 
-
-    constructor(private router: Router, private propertyService: PropertyService) {
-
-    }
+    constructor(
+        private router: Router,
+        private propertyService: PropertyService) { }
 
     getSearchVal(search: any) {
         if (search.value !== undefined) {
@@ -23,6 +22,7 @@ export class InitialStateComponent {
                 .subscribe((res: any) => {
                     let status = res.response.application_response_code;
                     if (status < 200) {
+                        console.log('less 200');
                         this.propertyService.results = res;
                         this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
                     } else {

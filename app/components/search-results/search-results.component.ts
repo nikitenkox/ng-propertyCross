@@ -26,10 +26,10 @@ export class SearchResultsComponent implements OnInit {
                 this.term = params['term'] || undefined;
                 this.latitude = params['latitude'] || undefined;
                 this.longitude = params['longitude'] || undefined;
-                this.propertyService.searchByWord(this.term, this.page)
-                    .subscribe(res => {
-                        this.response = res.response;
-                    });
+            });
+        this.propertyService.result
+            .subscribe((res: any) => {
+                this.response = res.response;
             });
     }
 
@@ -42,16 +42,13 @@ export class SearchResultsComponent implements OnInit {
     }
 
     navigateToPage() {
-        if (this.latitude !== undefined || this.longitude !== undefined) {
+        if (this.latitude !== undefined && this.longitude !== undefined) {
             this.router.navigate(['/results'], { queryParams: { latitude: this.latitude, longitude: this.longitude, page: this.page } });
-            /* this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page)
-                .subscribe(res => this.propertyService.results = res);*/
-            this.propertyService.searchByCoords(53.41058, -2.97794, this.page)
-                .subscribe(res => this.propertyService.results = res);
+            // this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page);
+            this.propertyService.searchByCoords(53.41058, -2.97794, this.page);
         } else {
             this.router.navigate(['/results'], { queryParams: { term: this.term, page: this.page } });
-            this.propertyService.searchByWord(this.term, this.page)
-                .subscribe(res => this.propertyService.results = res);
+            this.propertyService.searchByWord(this.term, this.page);
         }
     }
 
