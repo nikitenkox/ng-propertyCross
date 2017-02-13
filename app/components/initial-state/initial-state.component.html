@@ -1,13 +1,13 @@
 <search-form (sendSearchVal)="getSearchVal($event)"></search-form>
-<div class="recent-searches">
+<div class="recent-searches" *ngIf="initState">
     <h2>Recent searches</h2>
-    <ul>
+    <ul *ngIf="recentSearches.length">
         <li *ngFor="let search of recentSearches"><a (click)="moveToSearch(search.location)" href="javascript:void(0);">{{search.location}} ({{search.count}})</a></li>
     </ul>
 </div>
-<div class="error-wrap" *ngIf="response?.application_response_code >= 200">
+<div class="error-wrap" *ngIf="errorState"> <!--response?.application_response_code >= 200 -->
     <h2>Error</h2>
 </div>
-<div class="listed-locations">
+<div class="listed-locations" *ngIf="!initState && !errorState">
     <h2>Listed locations</h2>
 </div>

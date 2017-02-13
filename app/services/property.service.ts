@@ -61,6 +61,7 @@ export class PropertyService {
     addRecent(location: string, count: number) {
         this.load();
         let item = new RecentLocation(location, count);
+        console.log(this.recentSearches.findIndex((e: RecentLocation) => e.location === location));
         this.recentSearches.unshift(item);
         this.save();
     }

@@ -11,7 +11,7 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class InitialStateComponent {
-    response: Object;
+    response: any;
     errorState: boolean = false;
     initState: boolean = true;
     recentSearches: Object[];
@@ -35,11 +35,11 @@ export class InitialStateComponent {
                     this.response = res.response;
                     let location = res.request.location;
                     let count = res.response.total_results;
-                    this.propertyService.addRecent(location, count);
+                    // this.propertyService.addRecent(location, count);
                     let status = res.response.application_response_code;
-                    if (status < 200) {
-                        console.log('less 200');
-                        this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
+                    console.log(status);
+                    if (res.response.application_response_code === 100) {
+                        // this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
                     } else {
                         console.log('error');
                     }
