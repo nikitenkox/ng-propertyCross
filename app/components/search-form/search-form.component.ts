@@ -16,7 +16,10 @@ export class SearchFormComponent {
     @Output()
     sendSearchVal = new EventEmitter();
 
-    constructor(private router: Router, private propertyService: PropertyService) { }
+    constructor(
+        private router: Router,
+        private propertyService: PropertyService
+        ) { }
 
     gotoResults(): void {
         this.sendSearchVal.emit({

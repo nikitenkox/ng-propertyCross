@@ -35,13 +35,13 @@ export class InitialStateComponent {
                     this.response = res.response;
                     let location = res.request.location;
                     let count = res.response.total_results;
-                    // this.propertyService.addRecent(location, count);
                     let status = res.response.application_response_code;
-                    console.log(status);
-                    if (res.response.application_response_code === 100) {
-                        // this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
-                    } else {
-                        console.log('error');
+
+                    if (status === '100') {
+                        this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
+                        // this.propertyService.addRecent(location, count);
+                    } else if (status === '101') {
+                        console.log('is 101');
                     }
                 });
         } else {
