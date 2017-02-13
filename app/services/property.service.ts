@@ -37,7 +37,7 @@ export class PropertyService {
     }
 
     searchByCoords(latitude: number, longitude: number, page: number) {
-        let searchParams = this.getURLParams({centre_point: latitude + ',' + longitude, page: page});
+        let searchParams = this.getURLParams({ centre_point: latitude + ',' + longitude, page: page });
         let obs = this.jsonp.get(this.api, { search: searchParams })
             .map(res => res.json()).share();
         obs.subscribe(res => this._results.next(res));
@@ -53,6 +53,25 @@ export class PropertyService {
             });
         return urlParams;
     }
+
+
+    getLocation(): Promise<any> {
+        // ********* Fake coords (Liverpool) **********
+        // latitude - (53.41058);
+        // longitude - (-2.97794);
+        let coords: any = {};
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                /*coords.latitude = position.coords.latitude;
+                coords.longitude = position.coords.longitude;*/
+                coords.latitude = 53.41058;
+                coords.longitude = -2.97794;
+            });
+        }
+        return Promise.resolve(coords);
+    }
+
+
 
     getRecentSearches() {
         if (localStorage.getItem('recent')) {
