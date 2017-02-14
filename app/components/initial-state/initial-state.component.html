@@ -1,3 +1,9 @@
+<h1>PropertyCross</h1>
+<button class="faves" (click)="goFaves()">Faves</button>
+<p>
+    Use the form below to search for houses to buy. You can search by place-name, postcode, or click 'My location', to search
+    in your current location!
+</p>
 <search-form (sendSearchVal)="getSearchVal($event)"></search-form>
 <button (click)="clean()">clean localStorage</button>
 <div class="recent-searches" *ngIf="!state?.locations.length && state?.error == undefined">

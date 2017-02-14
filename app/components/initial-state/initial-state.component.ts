@@ -33,6 +33,10 @@ export class InitialStateComponent {
         localStorage.clear();
     }
 
+    goFaves() {
+        this.router.navigate(['/favourites']);
+    }
+
     getSearchVal(search: any) {
         if (search.value !== undefined) {
             this.propertyService.searchByWord(search.value, search.page);
