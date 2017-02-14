@@ -16,6 +16,7 @@ export class PropertyService {
     private _results: BehaviorSubject<Object> = new BehaviorSubject([]);
     public result: Observable<Object> = this._results.asObservable();
     recentSearches: RecentLocation[] = [];
+    favourites: any[] = [];
     public observer: Observer<any>;
     public notification: Observable<any>;
     private defaultParams: Object;
@@ -44,6 +45,7 @@ export class PropertyService {
             })
             .share()
             .subscribe(res => {
+                console.log(res);
                 this._results.next(res);
                 let status = res.response.application_response_code;
                 let location = res.request.location;
@@ -164,6 +166,15 @@ export class PropertyService {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    saveToFaves(item: any) {
+        this.favourites.push(item);
+        localStorage.setItem('faves', JSON.stringify(this.favourites));
+    }
+
+    getFaves() {
+        return JSON.parse(localStorage.getItem('faves'));
     }
 }
 

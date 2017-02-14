@@ -1,2 +1,3 @@
 <h2>Favourites</h2>
-<result-item *ngFor="let x of [1,2,3,4,5]"></result-item>
+<button (click)="goHome()">Home</button>
+<result-item *ngFor="let favourite of faves" [item]="favourite" [index]="i"></result-item>

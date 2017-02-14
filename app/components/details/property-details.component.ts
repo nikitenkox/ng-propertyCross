@@ -31,4 +31,8 @@ export class PropertyDetailsComponent implements OnInit {
     goBack() {
         this.location.back();
     }
+
+    addToFaves() {
+        this.propertyService.saveToFaves(this.item);
+    }
 }
