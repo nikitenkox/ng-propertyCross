@@ -155,6 +155,7 @@ export class PropertyService {
     private save() {
         try {
             localStorage.setItem('recent', JSON.stringify(this.recentSearches));
+            localStorage.setItem('faves', JSON.stringify(this.favourites));
         } catch (err) {
             console.error(err);
         }
@@ -163,6 +164,7 @@ export class PropertyService {
     private load() {
         try {
             this.recentSearches = JSON.parse(localStorage.getItem('recent'));
+            this.favourites = JSON.parse(localStorage.getItem('faves'));
         } catch (err) {
             console.error(err);
         }
@@ -170,11 +172,11 @@ export class PropertyService {
 
     saveToFaves(item: any) {
         this.favourites.push(item);
-        localStorage.setItem('faves', JSON.stringify(this.favourites));
+        this.save();
     }
 
     getFaves() {
-        this.favourites = JSON.parse(localStorage.getItem('faves'));
+        this.load();
         return this.favourites;
     }
 }
