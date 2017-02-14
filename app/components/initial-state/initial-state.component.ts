@@ -11,9 +11,7 @@ import { PropertyService } from '../../services/property.service';
 })
 
 export class InitialStateComponent {
-    response: any;
-    errorState: boolean = false;
-    initState: boolean = true;
+    state: any;
     recentSearches: Object[];
 
     constructor(
@@ -25,34 +23,25 @@ export class InitialStateComponent {
 
     moveToSearch(location: string) {
         this.propertyService.searchByWord(location, 1);
-        this.router.navigate(['/results'], { queryParams: { term: location, page: 1 } });
+        this.propertyService.notification
+            .subscribe(res => {
+                this.state = res;
+            });
+    }
+
+    clean() {
+        localStorage.clear();
     }
 
     getSearchVal(search: any) {
         if (search.value !== undefined) {
-            this.propertyService.searchByWord(search.value, search.page)
-                .subscribe((res: any) => {
-                    this.response = res.response;
-                    let location = res.request.location;
-                    let count = res.response.total_results;
-                    let status = res.response.application_response_code;
-
-                    if (status === '100') {
-                        this.router.navigate(['/results'], { queryParams: { term: search.value, page: search.page } });
-                        // this.propertyService.addRecent(location, count);
-                    } else if (status === '101') {
-                        console.log('is 101');
-                    }
-                });
+            this.propertyService.searchByWord(search.value, search.page);
         } else {
             this.propertyService.searchByCoords(search.latitude, search.longitude, search.page);
-            this.router.navigate(['/results'], {
-                queryParams: {
-                    latitude: search.latitude,
-                    longitude: search.longitude,
-                    page: search.page
-                }
-            });
         }
+        this.propertyService.notification
+            .subscribe(res => {
+                this.state = res;
+            });
     }
 }

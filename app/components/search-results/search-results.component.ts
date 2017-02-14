@@ -55,8 +55,8 @@ export class SearchResultsComponent implements OnInit {
                     page: this.page
                 }
             });
-            // this.propertyService.searchByCoords(position.coords.latitude, position.coords.longitude, this.page);
-            this.propertyService.searchByCoords(53.41058, -2.97794, this.page);
+            this.propertyService.searchByCoords(this.latitude, this.longitude, this.page);
+            // this.propertyService.searchByCoords(53.41058, -2.97794, this.page);
         } else {
             this.router.navigate(['/results'], {
                 queryParams:

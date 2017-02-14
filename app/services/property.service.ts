@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { URLSearchParams, Jsonp } from '@angular/http';
+import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
@@ -14,9 +16,14 @@ export class PropertyService {
     private _results: BehaviorSubject<Object> = new BehaviorSubject([]);
     public result: Observable<Object> = this._results.asObservable();
     recentSearches: RecentLocation[] = [];
+    public observer: Observer<any>;
+    public notification: Observable<any>;
     private defaultParams: Object;
 
-    constructor(private jsonp: Jsonp) {
+    constructor(
+        private jsonp: Jsonp,
+        private router: Router
+    ) {
         this.defaultParams = {
             country: 'uk',
             pretty: '1',
@@ -26,21 +33,69 @@ export class PropertyService {
             number_of_results: '10',
             callback: 'JSONP_CALLBACK'
         };
+        this.notification = new Observable((observer: any) => this.observer = observer).share();
     }
 
     searchByWord(term: string, page: number) {
         let searchParams = this.getURLParams({ place_name: term, page: page });
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json()).share();
-        obs.subscribe(res => this._results.next(res));
+            .map(res => {
+                return res.json();
+            })
+            .share()
+            .subscribe(res => {
+                this._results.next(res);
+                let status = res.response.application_response_code;
+                let location = res.request.location;
+                let locations = res.response.locations;
+                let count = res.response.total_results;
+                let errorText;
+                if (status === '100' || status === '101' || status === '110') {
+                    this.router.navigate(['/results'], { queryParams: { term: term, page: page } });
+                    this.addRecent(location, count);
+                } else if (status === '200' || status === '202') {
+                    errorText = res.response.application_response_text;
+                } else {
+                    errorText = res.response.application_response_text;
+                }
+                this.observer.next({
+                    locations: locations,
+                    status: status,
+                    error: errorText
+                });
+            });
         return obs;
     }
 
     searchByCoords(latitude: number, longitude: number, page: number) {
         let searchParams = this.getURLParams({ centre_point: latitude + ',' + longitude, page: page });
         let obs = this.jsonp.get(this.api, { search: searchParams })
-            .map(res => res.json()).share();
-        obs.subscribe(res => this._results.next(res));
+            .map(res => res.json())
+            .share()
+            .subscribe(res => {
+                this._results.next(res);
+                let status = res.response.application_response_code;
+                let locations = res.response.locations;
+                let errorText;
+                if (status === '100' || status === '101' || status === '110') {
+                    this.router.navigate(['/results'], {
+                        queryParams: {
+                            latitude: latitude,
+                            longitude: longitude,
+                            page: page
+                        }
+                    });
+                } else if (status === '200' || status === '202') {
+                    errorText = res.response.application_response_text;
+                } else {
+                    errorText = res.response.application_response_text;
+                }
+                this.observer.next({
+                    locations: locations,
+                    status: status,
+                    error: errorText
+                });
+            });
         return obs;
     }
 
@@ -62,10 +117,10 @@ export class PropertyService {
         let coords: any = {};
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                /*coords.latitude = position.coords.latitude;
-                coords.longitude = position.coords.longitude;*/
-                coords.latitude = 53.41058;
-                coords.longitude = -2.97794;
+                coords.latitude = position.coords.latitude;
+                coords.longitude = position.coords.longitude;
+                /*coords.latitude = 53.41058;
+                coords.longitude = -2.97794;*/
             });
         }
         return Promise.resolve(coords);
@@ -85,8 +140,13 @@ export class PropertyService {
     addRecent(location: string, count: number) {
         this.load();
         let item = new RecentLocation(location, count);
-        console.log(this.recentSearches.findIndex((e: RecentLocation) => e.location === location));
-        this.recentSearches.unshift(item);
+        let index = this.recentSearches.findIndex((e: RecentLocation) => e.location === location);
+        if (index === -1) {
+            this.recentSearches.unshift(item);
+        } else {
+            this.recentSearches.splice(index, 1);
+            this.recentSearches.unshift(item);
+        }
         this.save();
     }
 
