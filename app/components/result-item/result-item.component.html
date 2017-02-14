@@ -1,4 +1,4 @@
-<a [routerLink]="['/detail', index]">
+<a [routerLink]="['/detail', index]" [queryParams]="{ isFave: isFave }">
     <div class="item-wrap">
         <figure>
             <img src="{{item?.img_url}}">

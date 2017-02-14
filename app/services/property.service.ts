@@ -174,7 +174,8 @@ export class PropertyService {
     }
 
     getFaves() {
-        return JSON.parse(localStorage.getItem('faves'));
+        this.favourites = JSON.parse(localStorage.getItem('faves'));
+        return this.favourites;
     }
 }
 

@@ -18,13 +18,21 @@ export class PropertyDetailsComponent implements OnInit {
         private location: Location,
         private route: ActivatedRoute,
         private propertyService: PropertyService
-    ) {}
+    ) { }
 
     ngOnInit() {
         let id = +this.route.snapshot.params['id'];
-        this.propertyService.result
-            .subscribe((res: any) => {
-                this.item = res.response.listings[id];
+        this.route.queryParams
+            .subscribe((params: any) => {
+                if (params.isFave === 'true') {
+                    this.item = this.propertyService
+                        .getFaves()[id];
+                } else {
+                    this.propertyService.result
+                        .subscribe((res: any) => {
+                            this.item = res.response.listings[id];
+                        });
+                }
             });
     }
 

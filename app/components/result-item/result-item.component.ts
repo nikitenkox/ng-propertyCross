@@ -12,4 +12,6 @@ export class ResultItemComponent {
     item: Object;
     @Input()
     index: number;
+    @Input()
+    isFave: boolean = false;
 }
