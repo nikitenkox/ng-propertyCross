@@ -4,10 +4,14 @@ import { Location } from '@angular/common';
 
 import { PropertyService } from '../../services/property.service';
 
+import './property-details.component.scss';
+
 @Component({
     selector: 'item-details',
     templateUrl: './app/components/details/property-details.component.html',
-    styleUrls: ['./app/components/details/property-details.component.css']
+    styleUrls: [
+        './app/components/details/property-details.component.css'
+        ]
 })
 
 export class PropertyDetailsComponent implements OnInit {
