@@ -7,8 +7,9 @@ import { SearchResultsComponent } from '../components/search-results/search-resu
 import { PropertyDetailsComponent } from '../components/details/property-details.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: InitialStateComponent },
+  // { path: '', redirectTo: '/home', pathMatch: 'full' },
+  // { path: 'home', component: InitialStateComponent },
+  { path: '', component: InitialStateComponent },
   { path: 'favourites', component: FavouritesComponent },
   { path: 'detail/:id', component: PropertyDetailsComponent },
   { path: 'results', component: SearchResultsComponent }

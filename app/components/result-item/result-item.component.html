@@ -1,11 +1,10 @@
-<a [routerLink]="['/detail', index]" [queryParams]="{ isFave: isFave }">
-    <div class="item-wrap">
-        <figure>
-            <img src="{{item?.img_url}}">
-        </figure>
+<div class="item-wrap">
+    <a [routerLink]="['/detail', index]" [queryParams]="{ isFave: isFave }">
+
+        <img src="{{item?.img_url}}">
         <div class="content">
             <h3>{{item?.title}}</h3>
             <p>{{item?.price_formatted}}</p>
         </div>
-    </div>
-</a>
+    </a>
+</div>

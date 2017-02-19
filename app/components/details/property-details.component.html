@@ -1,15 +1,12 @@
 <h1>Details page</h1>
-<h2>sassed</h2>
-<button (click)="goBack()">Go back</button>
-<button (click)="addToFaves()">Add to favourites</button>
+<div class="det-button-wr">
+    <button (click)="goBack()">Go back</button>
+    <button (click)="addToFaves()">Add to favourites</button>
+</div>
 <div class="wrapper">
-    <div class="main-details">
-        <h2>{{item?.title}}</h2>
-        <h3>{{item?.price_formatted}}</h3>
-        <figure>
-            <img src="{{item?.img_url}}">
-        </figure>
-    </div>
+    <h2>{{item?.title}}</h2>
+    <h3>{{item?.price_formatted}}</h3>
+    <img src="{{item?.img_url}}">
     <div class="summary">
         <h4>beds: {{item?.bedroom_number}} bathrooms: {{item?.bathroom_number}}</h4>
         <p>{{item?.summary}}</p>
