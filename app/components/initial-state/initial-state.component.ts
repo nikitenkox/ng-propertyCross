@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 import { PropertyService } from '../../services/property.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'initial-state',
-    templateUrl: './initial-state.component.html',
-    styleUrls: ['./initial-state.component.css']
+    templateUrl: './app/components/initial-state/initial-state.component.html',
+    styleUrls: ['./app/components/initial-state/initial-state.component.css']
 })
 
 export class InitialStateComponent {

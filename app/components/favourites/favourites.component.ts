@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 import { PropertyService } from '../../services/property.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'favourites',
-    templateUrl: './favourites.component.html',
-    styleUrls: ['favourites.component.css']
+    templateUrl: './app/components/favourites/favourites.component.html',
+    styleUrls: ['./app/components/favourites/favourites.component.css']
 })
 
 export class FavouritesComponent implements OnInit {

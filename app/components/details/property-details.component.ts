@@ -5,10 +5,9 @@ import { Location } from '@angular/common';
 import { PropertyService } from '../../services/property.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'item-details',
-    templateUrl: './property-details.component.html',
-    styleUrls: ['./property-details.component.css']
+    templateUrl: './app/components/details/property-details.component.html',
+    styleUrls: ['./app/components/details/property-details.component.css']
 })
 
 export class PropertyDetailsComponent implements OnInit {

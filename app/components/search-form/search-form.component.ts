@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 import { PropertyService } from '../../services/property.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'search-form',
-    templateUrl: './search-form.component.html',
-    styleUrls: ['./search-form.component.css']
+    templateUrl: './app/components/search-form/search-form.component.html',
+    styleUrls: ['./app/components/search-form/search-form.component.css']
 })
 
 export class SearchFormComponent implements OnInit {

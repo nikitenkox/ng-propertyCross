@@ -4,10 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PropertyService } from '../../services/property.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'search-results',
-    templateUrl: './search-results.component.html',
-    styleUrls: ['./search-results.component.css']
+    templateUrl: './app/components/search-results/search-results.component.html',
+    styleUrls: ['./app/components/search-results/search-results.component.css']
 })
 
 export class SearchResultsComponent implements OnInit {

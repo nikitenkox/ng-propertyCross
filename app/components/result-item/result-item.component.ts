@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'result-item',
-    templateUrl: './result-item.component.html',
-    styleUrls: ['./result-item.component.css']
+    templateUrl: './app/components/result-item/result-item.component.html',
+    styleUrls: ['./app/components/result-item/result-item.component.css']
 })
 
 export class ResultItemComponent {
